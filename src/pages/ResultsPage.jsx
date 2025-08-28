@@ -9,44 +9,57 @@ const ResultsPage = () => {
   const { answers } = useQuestionnaire();
 
   // Filtrado flexible: devuelve vehículos que coincidan con la mayor cantidad de respuestas posibles
-  const filteredVehicles = useMemo(() => {
-    return vehicles
-      .map((vehicle) => {
-        let score = 0;
+const filteredVehicles = useMemo(() => {
+  return vehicles
+    .map((vehicle) => {
+      let score = 0;
 
-        // Ejemplo de lógica de coincidencia flexible:
-        if (answers["q1"]) {
-          const tipo = answers["q1"];
-          if (Array.isArray(vehicle["Tipo de Vehículo"])) {
-            if (vehicle["Tipo de Vehículo"].includes(tipo)) score++;
-          } else if (vehicle["Tipo de Vehículo"] === tipo) score++;
-        }
+      // Pregunta 1: Tipo de Vehículo
+      if (answers["q1"]) {
+        if (answers["q1"] && vehicle.tipo === answers["q1"].value) score++;
+      }
 
-        if (answers["q2"] && Array.isArray(answers["q2"])) {
-          const terrenos = answers["q2"];
-          const match = vehicle.Terreno.some((t) => terrenos.includes(t));
-          if (match) score++;
-        }
+      // Pregunta 2: Terrenos
+      if (answers["q2"]) {
+        const terrenos = answers["q2"].value;
+        if (vehicle.terrenos.some((t) => terrenos.includes(t))) score++;
+      }
 
-        if (answers["q3"] && Array.isArray(answers["q3"])) {
-          const plazas = answers["q3"];
-          if (plazas.includes(vehicle["Habitabilidad en plazas máximas"])) score++;
-        }
+      // Pregunta 3: Plazas
+      if (answers["q3"]) {
+        if (vehicle.plazasMax >= answers["q3"].value) score++;
+      }
 
-        if (answers["q4"] && vehicle.Valor <= answers["q4"]) score++;
-        if (answers["q5"] && vehicle.Condicion === answers["q5"]) score++;
-        if (answers["q6"] && vehicle.Gama === answers["q6"]) score++;
-        if (answers["q7"] && vehicle.Reventa === answers["q7"]) score++;
+      // Pregunta 4: Valor
+      if (answers["q4"]) {
+        if (vehicle.valor <= answers["q4"].value) score++;
+      }
 
-        return { ...vehicle, score };
-      })
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3); // solo los 3 mejores
-  }, [answers]);
+      // Pregunta 5: Condición
+      if (answers["q5"]) {
+        if (vehicle.condicion === answers["q5"].value) score++;
+      }
+
+      // Pregunta 6: Gama
+      if (answers["q6"]) {
+        if (vehicle.gama === answers["q6"].value) score++;
+      }
+
+      // Pregunta 7: Reventa
+      if (answers["q7"]) {
+        if (vehicle.reventa === answers["q7"].value) score++;
+      }
+
+      return { ...vehicle, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+}, [answers]);
+
 
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="xl"
       sx={{
         minHeight: "100vh",
         display: "flex",
@@ -55,8 +68,8 @@ const ResultsPage = () => {
         p: 2,
       }}
     >
-      <Typography variant="h4" fontWeight="bold" sx={{ mb: 4 }}>
-        Vehículos recomendados
+      <Typography variant="h4" fontWeight="bold" sx={{ mb: 4, textAlign: "center" }}>
+        Tenemos estos vehículos recomendados para vos:
       </Typography>
 
       <Grid container justifyContent="center" spacing={2}>

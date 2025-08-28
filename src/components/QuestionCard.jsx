@@ -6,17 +6,7 @@ const QuestionCard = ({ pregunta, opciones, selectedOption }) => {
   const { selectOption } = useQuestionnaire();
 
   return (
-    <Box
-      sx={{
-        p: 3,
-        borderRadius: 3,
-        boxShadow: 3,
-        bgcolor: "background.paper",
-        width: "100%",
-        maxWidth: 600,
-        textAlign: "center",
-      }}
-    >
+    <Box sx={{ p: 3, borderRadius: 3, boxShadow: 3, bgcolor: "background.paper", width: "100%", maxWidth: 600, textAlign: "center" }}>
       <Typography variant="h5" sx={{ mb: 3 }}>
         {pregunta}
       </Typography>

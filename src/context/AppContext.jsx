@@ -3,7 +3,6 @@ import React, { createContext, useState, useContext } from "react";
 import { questions } from "../data/questions";
 
 const AppContext = createContext();
-
 export const useQuestionnaire = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => {
@@ -11,8 +10,11 @@ export const AppProvider = ({ children }) => {
   const [answers, setAnswers] = useState({});
 
   const selectOption = (optionId) => {
+    const question = questions[currentQuestion];
     const questionId = questions[currentQuestion].id;
-    setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
+    const option = question.opciones.find((opt) => opt.id === optionId);
+    if (!option) return;
+    setAnswers((prev) => ({ ...prev, [questionId]: { keyAnswer: option.id, value: option.valor } }));
   };
 
   const nextQuestion = () => {

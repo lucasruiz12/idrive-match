@@ -39,7 +39,8 @@ const QuestionnairePage = () => {
       <QuestionCard
         pregunta={question.pregunta}
         opciones={question.opciones}
-        selectedOption={answers[question.id]}
+        selectedOption={answers[question.id]?.keyAnswer}
+        questionId={question.id}
       />
 
       <Box sx={{ mt: 4 }}>
