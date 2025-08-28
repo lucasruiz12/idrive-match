@@ -1,8 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import QuestionnairePage from "./pages/QuestionnairePage";
+import ResultsPage from "./pages/ResultsPage";
+
 function App() {
   return (
-    <div className="container">
-      <h1>Base SPA IDrive Match</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/cuestionario" element={<QuestionnairePage />} />
+        <Route path="/resultados" element={<ResultsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
