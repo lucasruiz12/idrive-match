@@ -1,4 +1,3 @@
-// src/pages/QuestionnairePage.jsx
 import { Container, Box, Button } from "@mui/material";
 import QuestionCard from "../components/QuestionCard";
 import { useQuestionnaire } from "../context/AppContext";
@@ -10,6 +9,7 @@ const QuestionnairePage = () => {
     currentQuestion,
     answers,
     nextQuestion,
+    prevQuestion,
   } = useQuestionnaire();
 
   const navigate = useNavigate();
@@ -43,7 +43,17 @@ const QuestionnairePage = () => {
         questionId={question.id}
       />
 
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 4, display: "flex", gap: 2 }}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          size="large"
+          onClick={prevQuestion}
+          disabled={currentQuestion === 0}
+        >
+          Atrás
+        </Button>
+
         <Button
           variant="contained"
           color="primary"
@@ -51,7 +61,9 @@ const QuestionnairePage = () => {
           onClick={handleNext}
           disabled={!answers[question.id]}
         >
-          {currentQuestion < questions.length - 1 ? "Siguiente" : "Ver Resultados"}
+          {currentQuestion < questions.length - 1
+            ? "Siguiente"
+            : "Ver Resultados"}
         </Button>
       </Box>
     </Container>

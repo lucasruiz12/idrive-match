@@ -1,4 +1,3 @@
-// src/context/AppContext.jsx
 import React, { createContext, useState, useContext } from "react";
 import { questions } from "../data/questions";
 
@@ -14,7 +13,10 @@ export const AppProvider = ({ children }) => {
     const questionId = questions[currentQuestion].id;
     const option = question.opciones.find((opt) => opt.id === optionId);
     if (!option) return;
-    setAnswers((prev) => ({ ...prev, [questionId]: { keyAnswer: option.id, value: option.valor } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: { keyAnswer: option.id, value: option.valor },
+    }));
   };
 
   const nextQuestion = () => {
@@ -23,6 +25,12 @@ export const AppProvider = ({ children }) => {
       return true;
     }
     return false;
+  };
+
+  const prevQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    }
   };
 
   const resetQuestionnaire = () => {
@@ -37,6 +45,7 @@ export const AppProvider = ({ children }) => {
         answers,
         selectOption,
         nextQuestion,
+        prevQuestion,
         resetQuestionnaire,
         totalQuestions: questions.length,
       }}
