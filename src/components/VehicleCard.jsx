@@ -191,6 +191,10 @@ const VehicleCard = ({ vehicle }) => {
 
       <Button
         variant="contained"
+        component="a"
+        href={`https://wa.me/5492364687971?text=Hola! Me interesa el ${vehicle.modelo} - ${vehicle.marca}. ¿Podrías darme más información?`}
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
           mt: 2,
           bgcolor: "#1f7a1f",
@@ -201,6 +205,7 @@ const VehicleCard = ({ vehicle }) => {
       >
         CONSULTAR POR WHATSAPP
       </Button>
+
     </Card>
   );
 };
